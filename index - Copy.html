@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>StayFinder - Hotel Booking</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f7fb;
+    color: #222;
+}
+
+/* ================= HEADER ================= */
+
+header {
+    background: #ffffff;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    color: #1769aa;
+}
+
+.logo span {
+    color: #ff6b35;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+
+nav a:hover {
+    color: #1769aa;
+}
+
+.dark-btn {
+    border: none;
+    background: #222;
+    color: white;
+    padding: 9px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+    min-height: 450px;
+    background: linear-gradient(
+        rgba(0,0,0,0.55),
+        rgba(0,0,0,0.55)
+    ),
+    linear-gradient(135deg, #1769aa, #4dabf7);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.hero-content {
+    width: 100%;
+    max-width: 1000px;
+    color: white;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 19px;
+    margin-bottom: 35px;
+}
+
+/* ================= SEARCH BOX ================= */
+
+.search-box {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+.search-box input,
+.search-box select {
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    outline: none;
+    font-size: 15px;
+}
+
+.search-btn {
+    background: #ff6b35;
+    border: none;
+    color: white;
+    padding: 14px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.search-btn:hover {
+    background: #e95725;
+}
+
+/* ================= SECTION ================= */
+
+.section {
+    padding: 50px 7%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.section-title h2 {
+    font-size: 32px;
+}
+
+.section-title p {
+    margin-top: 8px;
+    color: #666;
+}
+
+/* ================= FILTERS ================= */
+
+.filters {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.filters select {
+    padding: 11px 15px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+}
+
+/* ================= HOTEL GRID ================= */
+
+.hotel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.hotel-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.hotel-card:hover {
+    transform: translateY(-5px);
+}
+
+.hotel-image {
+    height: 190px;
+    background: linear-gradient(135deg, #1769aa, #8ec5fc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 65px;
+    color: white;
+}
+
+.hotel-info {
+    padding: 20px;
+}
+
+.hotel-info h3 {
+    margin-bottom: 8px;
+}
+
+.location {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.rating {
+    color: #f5a623;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.price span {
+    font-size: 13px;
+    font-weight: normal;
+    color: #777;
+}
+
+.facilities {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+}
+
+.facility {
+    background: #eef5ff;
+    color: #1769aa;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.card-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.card-buttons button {
+    flex: 1;
+    padding: 11px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.details-btn {
+    background: white;
+    border: 1px solid #1769aa;
+    color: #1769aa;
+}
+
+.book-btn {
+    background: #1769aa;
+    border: none;
+    color: white;
+}
+
+/* ================= MODAL ================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 200;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    width: 100%;
+    max-width: 550px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 30px;
+    border-radius: 15px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: #1769aa;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+}
+
+.confirm-btn {
+    width: 100%;
+    padding: 14px;
+    background: #1769aa;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* ================= CONFIRMATION ================= */
+
+.confirmation {
+    text-align: center;
+}
+
+.success-icon {
+    font-size: 65px;
+    margin-bottom: 15px;
+}
+
+.booking-id {
+    background: #eef5ff;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    color: #1769aa;
+    font-weight: bold;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+    background: #17202a;
+    color: white;
+    text-align: center;
+    padding: 35px;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 8px;
+}
+
+/* ================= DARK MODE ================= */
+
+body.dark {
+    background: #121212;
+    color: white;
+}
+
+body.dark header,
+body.dark .hotel-card,
+body.dark .modal-content,
+body.dark .search-box {
+    background: #1e1e1e;
+    color: white;
+}
+
+body.dark nav a {
+    color: white;
+}
+
+body.dark .location,
+body.dark .section-title p {
+    color: #bbb;
+}
+
+body.dark .search-box input,
+body.dark .search-box select,
+body.dark .form-group input,
+body.dark .form-group select {
+    background: #292929;
+    color: white;
+    border-color: #444;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width: 800px) {
+
+    .search-box {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 35px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+    <div class="logo">
+        Stay<span>Finder</span>
+    </div>
+
+    <nav>
+        <a href="#">Home</a>
+        <a href="#hotels">Hotels</a>
+        <a href="#bookings">My Bookings</a>
+    </nav>
+
+    <button class="dark-btn" onclick="toggleDarkMode()">
+        🌙
+    </button>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>Find Your Perfect Stay 🏨</h1>
+
+        <p>
+            Search hotels across India by state, city or area.
+        </p>
+
+        <div class="search-box">
+
+            <select id="stateSelect" onchange="loadCities()">
+
+                <option value="">
+                    Select State
+                </option>
+
+            </select>
+
+
+            <select id="citySelect" onchange="loadAreas()">
+
+                <option value="">
+                    Select City / District
+                </option>
+
+            </select>
+
+
+            <select id="areaSelect">
+
+                <option value="">
+                    Select Area
+                </option>
+
+            </select>
+
+
+            <button class="search-btn" onclick="searchHotels()">
+                🔍 Search
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOTELS ================= -->
+
+<section class="section" id="hotels">
+
+    <div class="section-title">
+
+        <h2>Available Hotels</h2>
+
+        <p id="resultText">
+            Select a location to find hotels
+        </p>
+
+    </div>
+
+
+    <div class="filters">
+
+        <select id="priceFilter" onchange="applyFilters()">
+
+            <option value="all">
+                All Prices
+            </option>
+
+            <option value="2000">
+                Under ₹2,000
+            </option>
+
+            <option value="3000">
+                Under ₹3,000
+            </option>
+
+            <option value="5000">
+                Under ₹5,000
+            </option>
+
+        </select>
+
+
+        <select id="ratingFilter" onchange="applyFilters()">
+
+            <option value="0">
+                All Ratings
+            </option>
+
+            <option value="4">
+                ⭐ 4+
+            </option>
+
+            <option value="4.5">
+                ⭐ 4.5+
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div id="hotelGrid" class="hotel-grid">
+
+        <!-- Hotels generated by JavaScript -->
+
+    </div>
+
+</section>
+
+
+<!-- ================= BOOKING MODAL ================= -->
+
+<div id="bookingModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeModal()">
+            ×
+        </span>
+
+        <h2>Book Your Hotel 🏨</h2>
+
+        <h3 id="selectedHotel"></h3>
+
+        <br>
+
+        <form onsubmit="confirmBooking(event)">
+
+            <div class="form-group">
+
+                <label>
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="guestName"
+                    required
+                    placeholder="Enter your name"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="guestEmail"
+                    required
+                    placeholder="Enter your email"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Phone
+                </label>
+
+                <input
+                    type="tel"
+                    id="guestPhone"
+                    required
+                    placeholder="Enter phone number"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Check-in
+                </label>
+
+                <input
+                    type="date"
+                    id="checkin"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Check-out
+                </label>
+
+                <input
+                    type="date"
+                    id="checkout"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Guests
+                </label>
+
+                <select id="guests">
+
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Rooms
+                </label>
+
+                <select id="rooms">
+
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+
+                </select>
+
+            </div>
+
+
+            <button class="confirm-btn" type="submit">
+
+                Confirm Booking
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================= CONFIRMATION MODAL ================= -->
+
+<div id="confirmationModal" class="modal">
+
+    <div class="modal-content confirmation">
+
+        <span class="close" onclick="closeConfirmation()">
+            ×
+        </span>
+
+        <div class="success-icon">
+            🎉
+        </div>
+
+        <h2>
+            Booking Confirmed!
+        </h2>
+
+        <p>
+            Your hotel booking has been successfully confirmed.
+        </p>
+
+        <div class="booking-id">
+
+            Booking ID:
+            <span id="bookingId"></span>
+
+        </div>
+
+        <p id="bookingDetails"></p>
+
+        <br>
+
+        <button
+            class="confirm-btn"
+            onclick="closeConfirmation()">
+
+            Done
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <h3>StayFinder 🏨</h3>
+
+    <p>
+        Find hotels. Book easily. Travel happily.
+    </p>
+
+    <p>
+        © 2026 StayFinder
+    </p>
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   LOCATION DATABASE
+===================================================== */
+
+const locationData = {
+
+    "Karnataka": {
+
+        "Bengaluru": [
+            "MG Road",
+            "Whitefield",
+            "Electronic City",
+            "Koramangala",
+            "Indiranagar",
+            "Jayanagar",
+            "Yeshwanthpur",
+            "Hebbal",
+            "Marathahalli",
+            "HSR Layout"
+        ],
+
+        "Mysuru": [
+            "City Center",
+            "Kuvempunagar",
+            "Vijayanagar",
+            "Bannur Road",
+            "Hootagalli",
+            "Jayalakshmipuram",
+            "Nazarbad",
+            "Lakshmipuram",
+            "Saraswathipuram",
+            "Hebbal"
+        ],
+
+        "Hubballi": [
+            "Gokul Road",
+            "Vidya Nagar",
+            "Keshwapur",
+            "Station Road",
+            "Deshpande Nagar",
+            "Unkal",
+            "Old Hubli",
+            "Hosur",
+            "Navanagar",
+            "Kalyan Nagar"
+        ],
+
+        "Dharwad": [
+            "Saptapur",
+            "Vidya Nagar",
+            "Court Circle",
+            "Srinagar",
+            "Malapur",
+            "Navanagar",
+            "Kalyan Nagar",
+            "Gandhinagar",
+            "Jubilee Circle",
+            "Toll Naka"
+        ],
+
+        "Vijayapura": [
+            "Solapur Road",
+            "Station Road",
+            "Athani Road",
+            "BLDE Road",
+            "MG Road",
+            "Tikota Road",
+            "Sindagi Road",
+            "Jal Nagar",
+            "Shanti Nagar",
+            "Gol Gumbaz Area"
+        ]
+
+    },
+
+    "Maharashtra": {
+
+        "Mumbai": [
+            "Andheri",
+            "Bandra",
+            "Colaba",
+            "Dadar",
+            "Powai",
+            "Juhu",
+            "Borivali",
+            "Kurla",
+            "Thane Road",
+            "Marine Drive"
+        ],
+
+        "Pune": [
+            "Hinjewadi",
+            "Koregaon Park",
+            "Viman Nagar",
+            "Kharadi",
+            "Baner",
+            "Wakad",
+            "Hadapsar",
+            "Shivajinagar",
+            "Kothrud",
+            "Camp"
+        ],
+
+        "Nagpur": [
+            "Dharampeth",
+            "Sadar",
+            "Sitabuldi",
+            "Wardha Road",
+            "Manish Nagar",
+            "Hingna",
+            "Civil Lines",
+            "Bajaj Nagar",
+            "Koradi",
+            "Mihan"
+        ]
+
+    },
+
+    "Tamil Nadu": {
+
+        "Chennai": [
+            "T Nagar",
+            "Anna Nagar",
+            "Adyar",
+            "Velachery",
+            "Guindy",
+            "OMR",
+            "Egmore",
+            "Nungambakkam",
+            "Porur",
+            "Tambaram"
+        ],
+
+        "Coimbatore": [
+            "RS Puram",
+            "Gandhipuram",
+            "Peelamedu",
+            "Saibaba Colony",
+            "Singanallur",
+            "Avinashi Road",
+            "Race Course",
+            "Ukkadam",
+            "Ganapathy",
+            "Vadavalli"
+        ]
+
+    },
+
+    "Telangana": {
+
+        "Hyderabad": [
+            "Banjara Hills",
+            "Jubilee Hills",
+            "Hitech City",
+            "Gachibowli",
+            "Madhapur",
+            "Secunderabad",
+            "Kukatpally",
+            "Begumpet",
+            "Ameerpet",
+            "Mehdipatnam"
+        ]
+
+    },
+
+    "Delhi": {
+
+        "New Delhi": [
+            "Connaught Place",
+            "Karol Bagh",
+            "Paharganj",
+            "Saket",
+            "Dwarka",
+            "Rohini",
+            "Lajpat Nagar",
+            "Vasant Kunj",
+            "Greater Kailash",
+            "Chanakyapuri"
+        ]
+
+    },
+
+    "West Bengal": {
+
+        "Kolkata": [
+            "Park Street",
+            "Salt Lake",
+            "New Town",
+            "Ballygunge",
+            "Howrah",
+            "Esplanade",
+            "Alipore",
+            "Dum Dum",
+            "Rajarhat",
+            "Garia"
+        ]
+
+    }
+
+};
+
+
+/* =====================================================
+   GENERATE ALL OTHER STATES
+===================================================== */
+
+const additionalStates = {
+
+    "Andhra Pradesh": [
+        "Visakhapatnam",
+        "Vijayawada",
+        "Tirupati"
+    ],
+
+    "Arunachal Pradesh": [
+        "Itanagar",
+        "Naharlagun",
+        "Tawang"
+    ],
+
+    "Assam": [
+        "Guwahati",
+        "Dibrugarh",
+        "Silchar"
+    ],
+
+    "Bihar": [
+        "Patna",
+        "Gaya",
+        "Muzaffarpur"
+    ],
+
+    "Chhattisgarh": [
+        "Raipur",
+        "Bhilai",
+        "Bilaspur"
+    ],
+
+    "Goa": [
+        "Panaji",
+        "Margao",
+        "Vasco da Gama"
+    ],
+
+    "Gujarat": [
+        "Ahmedabad",
+        "Surat",
+        "Vadodara"
+    ],
+
+    "Haryana": [
+        "Gurugram",
+        "Faridabad",
+        "Panipat"
+    ],
+
+    "Himachal Pradesh": [
+        "Shimla",
+        "Manali",
+        "Dharamshala"
+    ],
+
+    "Jharkhand": [
+        "Ranchi",
+        "Jamshedpur",
+        "Dhanbad"
+    ],
+
+    "Kerala": [
+        "Kochi",
+        "Thiruvananthapuram",
+        "Kozhikode"
+    ],
+
+    "Madhya Pradesh": [
+        "Bhopal",
+        "Indore",
+        "Gwalior"
+    ],
+
+    "Manipur": [
+        "Imphal",
+        "Thoubal",
+        "Bishnupur"
+    ],
+
+    "Meghalaya": [
+        "Shillong",
+        "Tura",
+        "Jowai"
+    ],
+
+    "Mizoram": [
+        "Aizawl",
+        "Lunglei",
+        "Champhai"
+    ],
+
+    "Nagaland": [
+        "Kohima",
+        "Dimapur",
+        "Mokokchung"
+    ],
+
+    "Odisha": [
+        "Bhubaneswar",
+        "Cuttack",
+        "Puri"
+    ],
+
+    "Punjab": [
+        "Amritsar",
+        "Ludhiana",
+        "Jalandhar"
+    ],
+
+    "Rajasthan": [
+        "Jaipur",
+        "Jodhpur",
+        "Udaipur"
+    ],
+
+    "Sikkim": [
+        "Gangtok",
+        "Namchi",
+        "Gyalshing"
+    ],
+
+    "Tripura": [
+        "Agartala",
+        "Udaipur",
+        "Dharmanagar"
+    ],
+
+    "Uttar Pradesh": [
+        "Lucknow",
+        "Kanpur",
+        "Agra"
+    ],
+
+    "Uttarakhand": [
+        "Dehradun",
+        "Haridwar",
+        "Nainital"
+    ],
+
+    "Jharkhand": [
+        "Ranchi",
+        "Jamshedpur",
+        "Dhanbad"
+    ]
+
+};
+
+
+/* =====================================================
+   CREATE 10 AREAS FOR ADDITIONAL CITIES
+===================================================== */
+
+Object.keys(additionalStates).forEach(state => {
+
+    if (!locationData[state]) {
+        locationData[state] = {};
+    }
+
+    additionalStates[state].forEach(city => {
+
+        locationData[state][city] = [
+            `${city} Main Road`,
+            `${city} City Center`,
+            `${city} Railway Station`,
+            `${city} Bus Stand`,
+            `${city} Market`,
+            `${city} MG Road`,
+            `${city} Industrial Area`,
+            `${city} University Area`,
+            `${city} Central`,
+            `${city} Highway`
+        ];
+
+    });
+
+});
+
+
+/* =====================================================
+   STATE DROPDOWN
+===================================================== */
+
+const stateSelect =
+    document.getElementById("stateSelect");
+
+const citySelect =
+    document.getElementById("citySelect");
+
+const areaSelect =
+    document.getElementById("areaSelect");
+
+
+Object.keys(locationData)
+    .sort()
+    .forEach(state => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = state;
+        option.textContent = state;
+
+        stateSelect.appendChild(option);
+
+    });
+
+
+/* =====================================================
+   LOAD CITIES
+===================================================== */
+
+function loadCities() {
+
+    citySelect.innerHTML =
+        '<option value="">Select City / District</option>';
+
+    areaSelect.innerHTML =
+        '<option value="">Select Area</option>';
+
+    const state =
+        stateSelect.value;
+
+    if (!state) return;
+
+    Object.keys(locationData[state])
+        .sort()
+        .forEach(city => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = city;
+            option.textContent = city;
+
+            citySelect.appendChild(option);
+
+        });
+
+}
+
+
+/* =====================================================
+   LOAD AREAS
+===================================================== */
+
+function loadAreas() {
+
+    areaSelect.innerHTML =
+        '<option value="">Select Area</option>';
+
+    const state =
+        stateSelect.value;
+
+    const city =
+        citySelect.value;
+
+    if (!state || !city) return;
+
+    locationData[state][city]
+        .forEach(area => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = area;
+            option.textContent = area;
+
+            areaSelect.appendChild(option);
+
+        });
+
+}
+
+
+/* =====================================================
+   HOTEL DATA
+===================================================== */
+
+let hotels = [];
+
+const hotelNames = [
+
+    "Grand Palace Hotel",
+    "Royal Comfort",
+    "City View Residency",
+    "Green Park Hotel",
+    "Sunrise Suites",
+    "The Central Stay",
+    "Blue Diamond Hotel",
+    "Urban Nest",
+    "Comfort Inn",
+    "Golden Leaf Hotel"
+
+];
+
+
+function generateHotels() {
+
+    hotels = [];
+
+    Object.keys(locationData).forEach(state => {
+
+        Object.keys(locationData[state])
+            .forEach(city => {
+
+                locationData[state][city]
+                    .forEach(area => {
+
+                        for (let i = 0; i < 2; i++) {
+
+                            const hotel = {
+
+                                id: hotels.length + 1,
+
+                                name:
+                                    hotelNames[i % hotelNames.length],
+
+                                state: state,
+
+                                city: city,
+
+                                area: area,
+
+                                price:
+                                    1200 +
+                                    Math.floor(
+                                        Math.random() * 3800
+                                    ),
+
+                                rating:
+                                    (
+                                        3.5 +
+                                        Math.random() * 1.5
+                                    ).toFixed(1),
+
+                                facilities: [
+                                    "WiFi",
+                                    "AC",
+                                    "Parking"
+                                ]
+
+                            };
+
+                            hotels.push(hotel);
+
+                        }
+
+                    });
+
+            });
+
+    });
+
+}
+
+
+generateHotels();
+
+
+/* =====================================================
+   DISPLAY HOTELS
+===================================================== */
+
+let currentHotels = hotels;
+
+
+function displayHotels(list) {
+
+    const grid =
+        document.getElementById("hotelGrid");
+
+    grid.innerHTML = "";
+
+    if (list.length === 0) {
+
+        grid.innerHTML = `
+            <div style="text-align:center;width:100%;">
+                <h2>😔 No hotels found</h2>
+                <p>Try another location.</p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    list.slice(0, 30)
+        .forEach(hotel => {
+
+            const card =
+                document.createElement("div");
+
+            card.className = "hotel-card";
+
+            card.innerHTML = `
+
+                <div class="hotel-image">
+                    🏨
+                </div>
+
+                <div class="hotel-info">
+
+                    <h3>
+                        ${hotel.name}
+                    </h3>
+
+                    <div class="location">
+                        📍 ${hotel.area},
+                        ${hotel.city}
+                    </div>
+
+                    <div class="rating">
+                        ⭐ ${hotel.rating}
+                    </div>
+
+                    <div class="price">
+                        ₹${hotel.price}
+                        <span>/ night</span>
+                    </div>
+
+                    <div class="facilities">
+
+                        ${hotel.facilities.map(
+                            facility =>
+                            `<span class="facility">
+                                ${facility}
+                            </span>`
+                        ).join("")}
+
+                    </div>
+
+                    <div class="card-buttons">
+
+                        <button
+                            class="details-btn"
+                            onclick="showDetails(${hotel.id})">
+
+                            Details
+
+                        </button>
+
+                        <button
+                            class="book-btn"
+                            onclick="openBooking(${hotel.id})">
+
+                            Book Now
+
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+
+            grid.appendChild(card);
+
+        });
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+function searchHotels() {
+
+    const state =
+        stateSelect.value;
+
+    const city =
+        citySelect.value;
+
+    const area =
+        areaSelect.value;
+
+
+    if (!state || !city) {
+
+        alert(
+            "Please select a state and city."
+        );
+
+        return;
+
+    }
+
+
+    currentHotels =
+        hotels.filter(hotel => {
+
+            return (
+                hotel.state === state &&
+                hotel.city === city &&
+                (!area || hotel.area === area)
+            );
+
+        });
+
+
+    document.getElementById("resultText")
+        .textContent =
+        `${currentHotels.length} hotels found in ${
+            area || city
+        }`;
+
+    displayHotels(currentHotels);
+
+    document.getElementById("hotels")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+function applyFilters() {
+
+    const price =
+        document.getElementById("priceFilter").value;
+
+    const rating =
+        document.getElementById("ratingFilter").value;
+
+
+    let filtered =
+        currentHotels.filter(hotel => {
+
+            const priceMatch =
+                price === "all" ||
+                hotel.price <= Number(price);
+
+            const ratingMatch =
+                Number(hotel.rating) >=
+                Number(rating);
+
+            return priceMatch && ratingMatch;
+
+        });
+
+
+    displayHotels(filtered);
+
+}
+
+
+/* =====================================================
+   HOTEL DETAILS
+===================================================== */
+
+function showDetails(id) {
+
+    const hotel =
+        hotels.find(h => h.id === id);
+
+    alert(
+        `🏨 ${hotel.name}\n\n` +
+        `📍 ${hotel.area}, ${hotel.city}, ${hotel.state}\n` +
+        `⭐ Rating: ${hotel.rating}\n` +
+        `💰 ₹${hotel.price} per night\n\n` +
+        `Facilities:\n` +
+        hotel.facilities.join(", ")
+    );
+
+}
+
+
+/* =====================================================
+   BOOKING
+===================================================== */
+
+let selectedHotel = null;
+
+
+function openBooking(id) {
+
+    selectedHotel =
+        hotels.find(h => h.id === id);
+
+    document.getElementById("selectedHotel")
+        .textContent =
+        `${selectedHotel.name} - ${selectedHotel.area}`;
+
+    document.getElementById("bookingModal")
+        .style.display = "flex";
+
+}
+
+
+function closeModal() {
+
+    document.getElementById("bookingModal")
+        .style.display = "none";
+
+}
+
+
+/* =====================================================
+   CONFIRM BOOKING
+===================================================== */
+
+function confirmBooking(event) {
+
+    event.preventDefault();
+
+    const name =
+        document.getElementById("guestName").value;
+
+    const email =
+        document.getElementById("guestEmail").value;
+
+    const phone =
+        document.getElementById("guestPhone").value;
+
+    const checkin =
+        document.getElementById("checkin").value;
+
+    const checkout =
+        document.getElementById("checkout").value;
+
+    const guests =
+        document.getElementById("guests").value;
+
+    const rooms =
+        document.getElementById("rooms").value;
+
+
+    const bookingId =
+        "HB" +
+        Date.now().toString().slice(-8);
+
+
+    const booking = {
+
+        bookingId,
+
+        name,
+
+        email,
+
+        phone,
+
+        hotel:
+            selectedHotel.name,
+
+        location:
+            selectedHotel.area +
+            ", " +
+            selectedHotel.city,
+
+        checkin,
+
+        checkout,
+
+        guests,
+
+        rooms
+
+    };
+
+
+    let bookings =
+        JSON.parse(
+            localStorage.getItem("bookings")
+        ) || [];
+
+
+    bookings.push(booking);
+
+
+    localStorage.setItem(
+        "bookings",
+        JSON.stringify(bookings)
+    );
+
+
+    document.getElementById("bookingId")
+        .textContent =
+        bookingId;
+
+
+    document.getElementById("bookingDetails")
+        .innerHTML = `
+
+            <strong>${selectedHotel.name}</strong>
+            <br>
+            📍 ${selectedHotel.area},
+            ${selectedHotel.city}
+            <br><br>
+
+            👤 ${name}
+            <br>
+            📅 ${checkin} → ${checkout}
+            <br>
+            👥 ${guests} Guest(s)
+            <br>
+            🛏️ ${rooms} Room(s)
+
+        `;
+
+
+    closeModal();
+
+    document.getElementById("confirmationModal")
+        .style.display = "flex";
+
+}
+
+
+/* =====================================================
+   CLOSE CONFIRMATION
+===================================================== */
+
+function closeConfirmation() {
+
+    document.getElementById("confirmationModal")
+        .style.display = "none";
+
+}
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+function toggleDarkMode() {
+
+    document.body.classList.toggle("dark");
+
+}
+
+
+/* =====================================================
+   INITIAL HOTELS
+===================================================== */
+
+displayHotels(hotels.slice(0, 12));
+
+
+</script>
+
+</body>
+</html>
